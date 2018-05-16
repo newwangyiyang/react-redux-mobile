@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
-import {NavLink} from 'react-router-dom';
 import styles from './Home.css';
 import {connect} from 'react-redux';
+import { getData, test } from '../../redux/Home/action'
 class Home extends Component{
     render() {
         return (
             <div styleName="Home">
-                <h1 onClick={() => this.props.wayNum('ADD')}>this is home page</h1>
-                <h1 onClick={() => this.props.wayNum('REDUCE')}>{this.props.fs.num}</h1>
-                <div>
-                    <NavLink to="/">首页</NavLink>
-                </div>
+                <h1 onClick={() => this.props.getData()}>标题</h1>
+                <h1 onClick={() => this.props.test('我想你')}>{this.props.home.data}</h1>
             </div>
         )
     }
@@ -19,11 +16,10 @@ class Home extends Component{
 
 export default connect(
     state => ({
-        fs: state
+        home: state.home
     }),
-    dispatch => ({
-       wayNum(type) {
-           dispatch({type});
-       } 
-    })
+    {
+        getData,
+        test
+    }
 )(CSSModules(Home, styles));
